@@ -4,16 +4,19 @@ import jakarta.persistence.*;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "tab_product")
+@Table(name = "tb_product")
 public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+
+    private Double price;
     @Column(columnDefinition = "TEXT")
     private String description;
     private String imgUrl;
@@ -29,9 +32,10 @@ public class Product {
     public Product(){
     }
 
-    public Product(Long id, String name, String description, String imgUrl) {
+    public Product(Long id, String name,Double price, String description, String imgUrl) {
         this.id = id;
         this.name = name;
+        this.price= price;
         this.description = description;
         this.imgUrl = imgUrl;
     }
@@ -50,6 +54,14 @@ public class Product {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
     }
 
     public String getDescription() {
@@ -77,5 +89,20 @@ public class Product {
     }
     public List<Order> getOrders(){
         return items.stream().map(x -> x.getOrder()).toList();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Product product = (Product) o;
+
+        return Objects.equals(id, product.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
     }
 }
