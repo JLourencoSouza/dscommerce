@@ -5,12 +5,20 @@ import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 
 public class ProdutcDTO {
 
     private Long id;
+    @Size(min = 3, max= 80, message = "Nome precisar ter de 3 a 80 caracteres")
+    @NotBlank(message = "Campo requerido")
     private String name;
+    @Positive(message = "Opreço dever ser positivo")
     private Double price;
+    @Size(min = 10, message = "Descrição precisa ter no minimo caracteres")
+    @NotBlank(message = "Campo requerido")
     private String description;
     private String imgUrl;
 
